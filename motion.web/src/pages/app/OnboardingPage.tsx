@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MotionLogo } from '@/components/MotionLogo'
+import { OnboardingVisual } from '@/components/OnboardingVisual'
 import { AuthSplitLayout } from '@/layouts/AuthSplitLayout'
 import { useAppState } from '@/context/AppState'
 import { cn } from '@/lib/cn'
@@ -75,7 +76,7 @@ export function OnboardingPage() {
         </button>
 
         <div className="mx-auto flex w-full max-w-xl flex-1 flex-col justify-center md:max-w-2xl">
-          <div className="mb-8 h-40 rounded-3xl border border-white/10 bg-gradient-to-br from-primary/40 to-secondary/20 glow-card md:h-52 lg:h-64" />
+          <OnboardingVisual key={index} slideIndex={index} />
           <h1 className="font-heading text-3xl font-bold leading-tight md:hidden lg:text-4xl">
             {slide.title}
           </h1>
