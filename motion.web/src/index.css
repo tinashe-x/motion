@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #4a00e0;
+  --color-secondary: #8e2de2;
+  --color-accent: #ffd700;
+  --color-urban: #2d2d2d;
+  --color-surface: #1a1a1f;
+  --color-surface-2: #24242c;
+  --color-muted: #9a9aa8;
+  --font-heading: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  background: #0e0e12;
+  color: #f4f4f8;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+}
+
+#root {
+  min-height: 100dvh;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.55s ease-out both;
+}
+
+.gradient-brand {
+  background: linear-gradient(135deg, #4a00e0 0%, #8e2de2 100%);
+}
+
+.glow-card {
+  box-shadow: 0 0 0 1px rgba(142, 45, 226, 0.25), 0 12px 40px rgba(74, 0, 224, 0.18);
+}
+
+.safe-bottom {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
+.marketing-shell {
+  width: 100%;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 768px) {
+  .marketing-shell {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .marketing-shell {
+    padding-inline: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .marketing-shell {
+    padding-inline: 4rem;
+  }
+}
+
+.app-shell {
+  width: 100%;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 768px) {
+  .app-shell {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-shell {
+    padding-inline: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .app-shell {
+    padding-inline: 4rem;
+  }
+}
