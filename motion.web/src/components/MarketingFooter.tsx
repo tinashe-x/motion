@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Instagram, Twitter, Mail } from 'lucide-react'
 import { MotionLogo } from '@/components/MotionLogo'
+import { withBase } from '@/lib/baseUrl'
 
 export function MarketingFooter() {
   return (
@@ -25,14 +26,14 @@ export function MarketingFooter() {
           </h3>
           <ul className="mt-4 space-y-2 text-sm text-muted">
             <li>
-              <Link to="/#how-it-works" className="hover:text-white">
+              <a href={withBase('#how-it-works')} className="hover:text-white">
                 About
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to="/#safety" className="hover:text-white">
+              <a href={withBase('#safety')} className="hover:text-white">
                 Safety
-              </Link>
+              </a>
             </li>
             <li>
               <Link to="/venues" className="hover:text-white">

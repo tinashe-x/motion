@@ -3,8 +3,8 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath, URL } from 'node:url'
 
-// GitHub Pages project site: tinashe-x.github.io/motion/motion.web/
-const base = process.env.VITE_BASE ?? '/motion/motion.web/'
+// GitHub Pages project site: https://tinashe-x.github.io/motion/
+const base = process.env.VITE_BASE ?? '/motion/'
 
 export default defineConfig({
   base,

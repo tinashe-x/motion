@@ -2,7 +2,7 @@
 
 Public marketing site + mock-data app shells for [Motion](https://github.com/tinashe-x/motion) — real-time nightlife discovery for Johannesburg.
 
-**Live site:** [https://tinashe-x.github.io/motion/motion.web/](https://tinashe-x.github.io/motion/motion.web/)
+**Live site:** [https://tinashe-x.github.io/motion/](https://tinashe-x.github.io/motion/)
 
 ## Stack
 
@@ -15,28 +15,28 @@ Public marketing site + mock-data app shells for [Motion](https://github.com/tin
 
 ```bash
 npm install
-npm run dev
-```
-
-Open [http://localhost:5173/motion/motion.web/](http://localhost:5173/motion/motion.web/) (matches the GitHub Pages base path).
-
-For local dev at the root path instead:
-
-```bash
 VITE_BASE=/ npm run dev
 ```
 
-## Build for GitHub Pages
+Open [http://localhost:5173/](http://localhost:5173/)
 
-The app is hosted as a **project site** under the monorepo at `/motion/motion.web/`:
+To preview the GitHub Pages base path locally:
+
+```bash
+npm run dev
+# → http://localhost:5173/motion/
+```
+
+## Deploy to GitHub Pages
+
+1. In the repo on GitHub: **Settings → Pages → Build and deployment → Source → GitHub Actions**
+2. Push to `main` (or run the workflow manually). The workflow builds `motion.web` and publishes `dist/`.
 
 ```bash
 npm run build:pages
 ```
 
-This builds with `base: '/motion/motion.web/'` and copies `index.html` → `404.html` so client-side routes work on GitHub Pages.
-
-Deploy the **contents of `dist/`** to that folder on the `main` branch (or point GitHub Pages at a workflow that publishes `dist/`).
+Uses `base: '/motion/'` and copies `index.html` → `404.html` for client-side routing.
 
 ## Routes
 

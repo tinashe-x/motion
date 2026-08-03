@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AppStateProvider } from '@/context/AppState'
 import { ToastStack } from '@/components/Toast'
+import { baseUrl } from '@/lib/baseUrl'
 import { MarketingLayout } from '@/layouts/MarketingLayout'
 import { AppShell } from '@/layouts/AppShell'
 import { AdminShell } from '@/layouts/AdminShell'
@@ -44,9 +45,11 @@ import {
 } from '@/pages/admin/AdminPages'
 
 export default function App() {
+  const basename = baseUrl.replace(/\/$/, '') || undefined
+
   return (
     <AppStateProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <ToastStack />
         <Routes>
           <Route element={<MarketingLayout />}>

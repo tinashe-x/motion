@@ -3,12 +3,13 @@ import { Link, useLocation } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { MotionLogo } from '@/components/MotionLogo'
 import { cn } from '@/lib/cn'
+import { withBase } from '@/lib/baseUrl'
 
 const links = [
-  { href: '/#how-it-works', label: 'How it Works' },
-  { href: '/#safety', label: 'Safety' },
-  { href: '/#venues', label: 'For Venues' },
-  { href: '/#download', label: 'Download' },
+  { href: withBase('#how-it-works'), label: 'How it Works' },
+  { href: withBase('#safety'), label: 'Safety' },
+  { href: withBase('#venues'), label: 'For Venues' },
+  { href: withBase('#download'), label: 'Download' },
 ]
 
 export function MarketingHeader() {

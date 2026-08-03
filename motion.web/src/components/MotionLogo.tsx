@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { cn } from '@/lib/cn'
+import { withBase } from '@/lib/baseUrl'
 
 const sizes = {
   sm: 'h-9',
@@ -20,7 +21,7 @@ export function MotionLogo({
   return (
     <Link to="/" className={cn('inline-flex items-center', className)}>
       <img
-        src="/motion-logo.png"
+        src={withBase('motion-logo.png')}
         alt="Motion"
         className={cn('w-auto object-contain', sizes[size])}
       />
