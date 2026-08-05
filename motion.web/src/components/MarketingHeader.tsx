@@ -6,11 +6,11 @@ import { cn } from '@/lib/cn'
 import { withBase } from '@/lib/baseUrl'
 
 const links = [
-  { href: withBase('#how-it-works'), label: 'How it Works' },
-  { href: withBase('#safety'), label: 'Safety' },
-  { href: withBase('#venues'), label: 'For Venues' },
-  { href: withBase('#download'), label: 'Download' },
-]
+  { href: withBase('#how-it-works'), label: 'How it Works', hash: true },
+  { href: withBase('#safety'), label: 'Safety', hash: true },
+  { to: '/venues', label: 'Partners', hash: false },
+  { href: withBase('#download'), label: 'Download', hash: true },
+] as const
 
 export function MarketingHeader() {
   const [open, setOpen] = useState(false)
@@ -38,15 +38,25 @@ export function MarketingHeader() {
       <div className="marketing-shell flex items-center justify-between py-3">
         <MotionLogo size="lg" />
         <nav className="hidden items-center gap-6 md:flex">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-muted transition hover:text-white"
-            >
-              {link.label}
-            </a>
-          ))}
+          {links.map((link) =>
+            link.hash ? (
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-sm text-muted transition hover:text-white"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.label}
+                to={link.to}
+                className="text-sm text-muted transition hover:text-white"
+              >
+                {link.label}
+              </Link>
+            ),
+          )}
           <Link
             to="/app"
             className="rounded-full gradient-brand px-4 py-2 text-sm font-semibold text-white shadow-[0_0_24px_rgba(74,0,224,0.35)]"
@@ -66,15 +76,25 @@ export function MarketingHeader() {
       {open ? (
         <div className="border-t border-white/5 bg-[#121218] px-4 py-4 md:hidden">
           <div className="flex flex-col gap-3">
-            {links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="rounded-lg px-2 py-2 text-sm text-muted hover:bg-white/5 hover:text-white"
-              >
-                {link.label}
-              </a>
-            ))}
+            {links.map((link) =>
+              link.hash ? (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="rounded-lg px-2 py-2 text-sm text-muted hover:bg-white/5 hover:text-white"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.label}
+                  to={link.to}
+                  className="rounded-lg px-2 py-2 text-sm text-muted hover:bg-white/5 hover:text-white"
+                >
+                  {link.label}
+                </Link>
+              ),
+            )}
             <Link
               to="/app"
               className="rounded-full gradient-brand px-4 py-3 text-center text-sm font-semibold"

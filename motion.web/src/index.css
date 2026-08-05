@@ -51,12 +51,222 @@ h4 {
   animation: fade-up 0.55s ease-out both;
 }
 
-.gradient-brand {
-  background: linear-gradient(135deg, #4a00e0 0%, #8e2de2 100%);
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(0.5deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(255, 215, 0, 0.65);
+  }
+}
+
+@keyframes ken-burns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes orb-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(12px, -18px) scale(1.05);
+  }
+  66% {
+    transform: translate(-8px, 10px) scale(0.95);
+  }
+}
+
+@keyframes meter-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
+@keyframes grid-scroll {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 48px 48px;
+  }
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+.animate-ken-burns {
+  animation: ken-burns 8s ease-out forwards;
+}
+
+.animate-orb-drift {
+  animation: orb-drift 12s ease-in-out infinite;
+}
+
+.animate-orb-drift-reverse {
+  animation: orb-drift 14s ease-in-out infinite reverse;
+}
+
+.animate-meter-pulse {
+  animation: meter-pulse 2s ease-in-out infinite;
+}
+
+.animate-grid-scroll {
+  animation: grid-scroll 20s linear infinite;
 }
 
 .glow-card {
   box-shadow: 0 0 0 1px rgba(142, 45, 226, 0.25), 0 12px 40px rgba(74, 0, 224, 0.18);
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+.glow-card:hover {
+  box-shadow: 0 0 0 1px rgba(142, 45, 226, 0.45), 0 16px 48px rgba(74, 0, 224, 0.28);
+  transform: translateY(-3px);
+}
+
+.shimmer-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.06) 50%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  animation: shimmer 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hero-grid-overlay {
+  background-image:
+    linear-gradient(rgba(142, 45, 226, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(142, 45, 226, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.carousel-slide-image {
+  transform: scale(1);
+}
+
+[data-active='true'] .carousel-slide-image {
+  animation: ken-burns 8s ease-out forwards;
+}
+
+.stagger-fade-up {
+  animation: fade-up 0.55s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-gradient-shift,
+  .animate-float,
+  .animate-float-slow,
+  .animate-pulse-glow,
+  .animate-ken-burns,
+  .animate-orb-drift,
+  .animate-orb-drift-reverse,
+  .animate-meter-pulse,
+  .animate-grid-scroll,
+  .shimmer-overlay::after,
+  [data-active='true'] .carousel-slide-image {
+    animation: none !important;
+  }
+
+  .glow-card:hover {
+    transform: none;
+  }
+}
+
+.gradient-brand {
+  background: linear-gradient(135deg, #4a00e0 0%, #8e2de2 100%);
+}
+
+a.gradient-brand,
+button.gradient-brand {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+a.gradient-brand:hover,
+button.gradient-brand:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(74, 0, 224, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.gradient-brand:hover,
+  button.gradient-brand:hover {
+    transform: none;
+  }
 }
 
 .safe-bottom {

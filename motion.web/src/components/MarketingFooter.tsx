@@ -37,7 +37,7 @@ export function MarketingFooter() {
             </li>
             <li>
               <Link to="/venues" className="hover:text-white">
-                For Venues
+                Partner with Motion
               </Link>
             </li>
             <li>

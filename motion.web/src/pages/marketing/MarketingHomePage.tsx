@@ -1,67 +1,64 @@
 import { Link } from 'react-router-dom'
-import {
-  ShieldCheck,
-  Radio,
-  Camera,
-  MapPin,
-  Sparkles,
-  Smartphone,
-} from 'lucide-react'
+import { ShieldCheck, Smartphone } from 'lucide-react'
 import { ScrollReveal } from '@/components/ui/Skeleton'
+import { ProblemCarousel } from '@/components/marketing/ProblemCarousel'
+import { HowItWorksCarousel } from '@/components/marketing/HowItWorksCarousel'
+import { JoinTheWaveGallery } from '@/components/marketing/JoinTheWaveGallery'
+import { SafetyFeatureGrid } from '@/components/marketing/SafetyFeatureGrid'
+import {
+  VerifiedPartnerCard,
+  type VerifiedPartner,
+} from '@/components/marketing/VerifiedPartnerCard'
 
-const problems = [
-  {
-    title: "You don't know what's actually happening tonight",
-    body: 'Plans die in group chats. Motion shows live energy before you commit.',
-  },
-  {
-    title: 'Social media shows you yesterday, not right now',
-    body: 'Feeds lag. Verified, geofenced moments keep Motion in the present.',
-  },
-  {
-    title: 'Safety is always a question mark',
-    body: 'Crowd signals and reputation scores put safety on the main stage.',
-  },
+const heroPhotos = [
+  'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1506157786151-b8491531f063?w=400&h=300&fit=crop',
 ]
 
-const steps = [
+const verifiedPartners: VerifiedPartner[] = [
   {
-    icon: MapPin,
-    title: 'Discover nearby',
-    body: 'Browse the map and home feed for concerts, clubs, and gatherings around Joburg.',
+    name: 'The Orbit',
+    type: 'venue',
+    tagline: 'Live jazz & late-night energy in Braamfontein.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&h=400&fit=crop',
   },
   {
-    icon: Radio,
-    title: 'Check the Motion Meter',
-    body: 'Live energy, safety, and crowd signals from people already there.',
+    name: 'Skyline Sessions',
+    type: 'host',
+    tagline: 'Rooftop amapiano takeovers across the inner city.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop',
   },
   {
-    icon: Camera,
-    title: 'See verified photos',
-    body: 'Geofenced, timestamped shots from attendees — not marketing stills.',
+    name: 'District One',
+    type: 'venue',
+    tagline: 'Warehouse parties with verified crowd signals.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&h=400&fit=crop',
   },
   {
-    icon: Sparkles,
-    title: 'Join & share',
-    body: 'RSVP, show up, then drop your own verified moment into the wave.',
-  },
-]
-
-const tiers = [
-  {
-    name: 'Basic Listing',
-    price: 'Free',
-    blurb: 'Verification badge, 48hr listing, up to 5 photos.',
+    name: 'Pulse Collective',
+    type: 'host',
+    tagline: 'Curated nightlife pop-ups from Melville to Maboneng.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&h=400&fit=crop',
   },
   {
-    name: 'Spotlight',
-    price: 'from R499/event',
-    blurb: 'Motion Meter inclusion, 7-day promo, push to nearby users.',
+    name: 'Neon Yard',
+    type: 'venue',
+    tagline: 'Open-air sets and festival energy every weekend.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&h=400&fit=crop',
   },
   {
-    name: 'Platinum',
-    price: 'from R2,999/event',
-    blurb: 'Priority placement, dedicated spotlight, performance dashboard.',
+    name: 'Afterglow Events',
+    type: 'host',
+    tagline: 'Verified hosts bringing the wave to new corners of Jozi.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600&h=400&fit=crop',
   },
 ]
 
@@ -69,7 +66,11 @@ export function MarketingHomePage() {
   return (
     <>
       <section className="relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 animate-gradient-shift bg-[linear-gradient(135deg,rgba(74,0,224,0.35),rgba(142,45,226,0.15),rgba(74,0,224,0.25))]" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(74,0,224,0.35),_transparent_55%),radial-gradient(ellipse_at_bottom_right,_rgba(142,45,226,0.2),_transparent_45%)]" />
+        <div className="hero-grid-overlay animate-grid-scroll pointer-events-none absolute inset-0 opacity-30" />
+        <div className="animate-orb-drift pointer-events-none absolute -left-20 top-20 h-72 w-72 rounded-full bg-primary/25 blur-3xl" />
+        <div className="animate-orb-drift-reverse pointer-events-none absolute -right-16 bottom-10 h-80 w-80 rounded-full bg-secondary/20 blur-3xl" />
         <div className="relative marketing-shell grid items-center gap-12 py-16 md:grid-cols-2 md:py-24 lg:gap-16 xl:gap-24">
           <div className="animate-fade-up space-y-6">
             <p className="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-accent">
@@ -82,19 +83,36 @@ export function MarketingHomePage() {
               Motion shows you what&apos;s actually happening right now —
               verified by the people already there.
             </p>
+
+            <div className="grid grid-cols-4 gap-2 sm:gap-3">
+              {heroPhotos.map((src, i) => (
+                <div
+                  key={src}
+                  className="stagger-fade-up overflow-hidden rounded-xl border border-white/10"
+                  style={{ animationDelay: `${0.12 * i}s` }}
+                >
+                  <img
+                    src={src}
+                    alt=""
+                    className="aspect-square w-full object-cover transition-transform duration-500 hover:scale-110"
+                  />
+                </div>
+              ))}
+            </div>
+
             <div className="flex flex-wrap gap-3">
               <a
                 href="#download"
-                className="rounded-full gradient-brand px-6 py-3 text-sm font-semibold shadow-[0_0_30px_rgba(74,0,224,0.4)]"
+                className="shimmer-overlay rounded-full gradient-brand px-6 py-3 text-sm font-semibold shadow-[0_0_30px_rgba(74,0,224,0.4)]"
               >
                 Get the App
               </a>
-              <a
-                href="#venues"
+              <Link
+                to="/venues"
                 className="rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 hover:border-accent/50 hover:text-accent"
               >
-                For Venues & Hosts
-              </a>
+                Become a Verified Partner
+              </Link>
             </div>
             <p className="text-sm text-white/50">
               See the vibe. Live the moment.
@@ -102,12 +120,13 @@ export function MarketingHomePage() {
           </div>
 
           <div className="animate-fade-up relative mx-auto w-full max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg lg:ml-auto">
-            <div className="absolute -inset-8 rounded-full bg-primary/30 blur-3xl" />
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/15 bg-[#15151c] p-3 shadow-[0_30px_80px_rgba(74,0,224,0.35)]">
+            <div className="animate-float-slow relative">
+              <div className="absolute -inset-8 animate-pulse-glow rounded-full bg-primary/30 blur-3xl" />
+              <div className="shimmer-overlay relative overflow-hidden rounded-[2rem] border border-white/15 bg-[#15151c] p-3 shadow-[0_30px_80px_rgba(74,0,224,0.35)]">
               <div className="overflow-hidden rounded-[1.5rem] bg-surface">
                 <div className="flex items-center justify-between px-4 pt-4">
                   <span className="font-heading text-sm font-semibold">Tonight</span>
-                  <span className="rounded-full bg-gradient-to-r from-primary to-accent px-2 py-0.5 text-[10px] font-bold text-black">
+                  <span className="animate-pulse-glow rounded-full bg-gradient-to-r from-primary to-accent px-2 py-0.5 text-[10px] font-bold text-black">
                     LIVE
                   </span>
                 </div>
@@ -123,9 +142,10 @@ export function MarketingHomePage() {
                   <p className="text-xs text-muted">The Orbit · Braamfontein</p>
                   <div className="mt-3 flex items-center justify-between rounded-xl border border-secondary/30 bg-secondary/10 px-3 py-2">
                     <span className="text-xs text-white/70">Motion Meter</span>
-                    <span className="font-heading text-sm font-bold text-accent">88</span>
+                    <span className="animate-meter-pulse font-heading text-sm font-bold text-accent">88</span>
                   </div>
                 </div>
+              </div>
               </div>
             </div>
           </div>
@@ -133,181 +153,136 @@ export function MarketingHomePage() {
       </section>
 
       <ScrollReveal>
-      <section className="border-y border-white/5 bg-[#121218] py-20">
-        <div className="marketing-shell">
-          <h2 className="font-heading text-3xl font-bold md:text-4xl">The Problem</h2>
-          <p className="mt-3 max-w-2xl text-muted">
-            Nightlife decisions shouldn&apos;t be guesswork.
-          </p>
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
-            {problems.map((item) => (
-              <article
-                key={item.title}
-                className="rounded-2xl border border-white/8 bg-surface-2 p-6 glow-card"
-              >
-                <h3 className="font-heading text-lg font-semibold">{item.title}</h3>
-                <p className="mt-3 text-sm text-muted">{item.body}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-      </ScrollReveal>
-
-      <ScrollReveal>
-      <section id="how-it-works" className="scroll-mt-24 py-20">
-        <div className="marketing-shell">
-          <h2 className="font-heading text-3xl font-bold md:text-4xl">How Motion Works</h2>
-          <p className="mt-3 max-w-2xl text-muted">
-            Four steps from discovery to a verified moment on the floor.
-          </p>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {steps.map((step, i) => (
-              <article
-                key={step.title}
-                className="rounded-2xl border border-white/8 bg-surface p-5"
-              >
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl gradient-brand">
-                  <step.icon size={20} />
-                </div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-accent">
-                  Step {i + 1}
-                </p>
-                <h3 className="mt-1 font-heading text-lg font-semibold">{step.title}</h3>
-                <p className="mt-2 text-sm text-muted">{step.body}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-      </ScrollReveal>
-
-      <ScrollReveal>
-      <section id="safety" className="scroll-mt-24 border-y border-white/5 bg-[#121218] py-20">
-        <div className="marketing-shell grid items-center gap-10 md:grid-cols-2 lg:gap-16">
-          <div>
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-semibold text-accent">
-              <ShieldCheck size={14} /> Safety First
-            </div>
+        <section className="border-y border-white/5 bg-[#121218] py-20">
+          <div className="marketing-shell">
             <h2 className="font-heading text-3xl font-bold md:text-4xl">
-              Built for Joburg nights — not just hype.
+              Still scrolling for the vibe?
             </h2>
-            <p className="mt-4 text-muted">
-              Safety Score, user reputation, geofenced photo verification, and
-              anonymous crowd signals keep accountability in the room.
+            <p className="mt-3 max-w-2xl text-muted">
+              Nightlife decisions shouldn&apos;t be guesswork.
             </p>
-            <ul className="mt-6 space-y-3 text-sm text-white/80">
-              <li>• Community-driven reputation (Motion-me trust score)</li>
-              <li>• Photos verified by location + time window</li>
-              <li>• Anonymous safety signals that update the Motion Meter</li>
-            </ul>
           </div>
-          <blockquote className="rounded-3xl border border-secondary/30 bg-gradient-to-br from-primary/30 to-secondary/10 p-8 glow-card">
-            <p className="font-heading text-2xl font-semibold leading-snug">
-              &ldquo;78% of Johannesburg residents cite safety as their top
-              nightlife concern — Motion was built to change that.&rdquo;
-            </p>
-          </blockquote>
-        </div>
-      </section>
+          <div className="mt-10 w-full">
+            <ProblemCarousel />
+          </div>
+        </section>
       </ScrollReveal>
 
       <ScrollReveal>
-      <section id="venues" className="scroll-mt-24 py-20">
-        <div className="marketing-shell">
-          <h2 className="font-heading text-3xl font-bold md:text-4xl">
-            For Venues & Hosts
-          </h2>
-          <p className="mt-3 max-w-2xl text-muted">
-            Put your night in front of people who are already out — with
-            promotion tiers that scale.
-          </p>
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
-            {tiers.map((tier) => (
-              <article
-                key={tier.name}
-                className="rounded-2xl border border-white/8 bg-surface-2 p-6 glow-card"
-              >
-                <h3 className="font-heading text-xl font-semibold">{tier.name}</h3>
-                <p className="mt-2 font-heading text-lg text-accent">{tier.price}</p>
-                <p className="mt-3 text-sm text-muted">{tier.blurb}</p>
-              </article>
-            ))}
-          </div>
-          <Link
-            to="/venues"
-            className="mt-8 inline-flex rounded-full gradient-brand px-6 py-3 text-sm font-semibold"
-          >
-            Become a Partner Venue
-          </Link>
-        </div>
-      </section>
-      </ScrollReveal>
-
-      <ScrollReveal>
-      <section id="community" className="border-y border-white/5 bg-[#121218] py-20">
-        <div className="marketing-shell">
-          <h2 className="font-heading text-3xl font-bold md:text-4xl">Join the Wave</h2>
-          <p className="mt-3 max-w-2xl text-muted">
-            Real user photos and captions from nights across the city.
-          </p>
-          <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-            {[
-              'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=500&fit=crop',
-              'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=500&fit=crop',
-              'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&h=500&fit=crop',
-              'https://images.unsplash.com/photo-1506157786151-b8491531f063?w=400&h=500&fit=crop',
-            ].map((src, i) => (
-              <figure
-                key={src}
-                className="overflow-hidden rounded-2xl border border-white/8"
-              >
-                <img src={src} alt="" className="aspect-[4/5] w-full object-cover" />
-                <figcaption className="bg-surface-2 px-3 py-2 text-xs text-muted">
-                  {['Packed floor', 'Lights up', 'Soundcheck', 'Festival warm-up'][i]}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
-      </ScrollReveal>
-
-      <ScrollReveal>
-      <section id="download" className="scroll-mt-24 py-20">
-        <div className="marketing-shell">
-          <div className="rounded-3xl border border-secondary/25 bg-gradient-to-br from-primary/25 via-[#15151c] to-secondary/10 p-8 md:p-12 glow-card">
-            <h2 className="font-heading text-3xl font-bold md:text-4xl">
-              Available on Android and iOS
-            </h2>
-            <p className="mt-3 max-w-xl text-muted">
-              Download the native app when it ships — or open Motion as a PWA and
-              add it to your home screen tonight.
+        <section id="how-it-works" className="scroll-mt-24 py-20">
+          <div className="marketing-shell">
+            <h2 className="font-heading text-3xl font-bold md:text-4xl">How Motion Works</h2>
+            <p className="mt-3 max-w-2xl text-muted">
+              Four steps from discovery to a verified moment on the floor.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <span className="rounded-xl border border-white/15 bg-black/40 px-5 py-3 text-sm font-semibold text-white/70">
-                App Store — Coming soon
-              </span>
-              <span className="rounded-xl border border-white/15 bg-black/40 px-5 py-3 text-sm font-semibold text-white/70">
-                Google Play — Coming soon
-              </span>
-              <Link
-                to="/app"
-                className="inline-flex items-center gap-2 rounded-xl gradient-brand px-5 py-3 text-sm font-semibold"
-              >
-                <Smartphone size={16} /> Open Web App
-              </Link>
+            <div className="mt-10">
+              <HowItWorksCarousel />
             </div>
-            <div className="mt-8 max-w-md rounded-2xl border border-white/10 bg-black/30 p-5">
-              <h3 className="font-heading font-semibold">Add to Home Screen</h3>
-              <p className="mt-2 text-sm text-muted">
-                In Chrome (Android): menu → Install app / Add to Home screen. On
-                iOS Safari: Share → Add to Home Screen.
+          </div>
+        </section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <section id="safety" className="scroll-mt-24 border-y border-white/5 bg-[#121218] py-20">
+          <div className="marketing-shell grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+            <div>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-semibold text-accent">
+                <ShieldCheck size={14} /> Safety First
+              </div>
+              <h2 className="font-heading text-3xl font-bold md:text-4xl">
+                Built for Joburg nights — not just hype.
+              </h2>
+              <p className="mt-4 text-muted">
+                Safety isn&apos;t a footnote. It&apos;s built into every listing,
+                photo, and signal on Motion — so you can make the call with
+                confidence.
               </p>
+              <div className="mt-8">
+                <SafetyFeatureGrid />
+              </div>
+            </div>
+            <blockquote className="rounded-3xl border border-secondary/30 bg-gradient-to-br from-primary/30 to-secondary/10 p-8 glow-card lg:sticky lg:top-28">
+              <p className="font-heading text-2xl font-semibold leading-snug">
+                &ldquo;78% of Johannesburg residents cite safety as their top
+                nightlife concern — Motion was built to change that.&rdquo;
+              </p>
+            </blockquote>
+          </div>
+        </section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <section id="verified-partners" className="scroll-mt-24 py-20">
+          <div className="marketing-shell">
+            <h2 className="font-heading text-3xl font-bold md:text-4xl">
+              Verified Hosts & Venues
+            </h2>
+            <p className="mt-3 max-w-2xl text-muted">
+              Trusted partners putting real nights on the map — seen by people
+              already out across Johannesburg.
+            </p>
+            <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {verifiedPartners.map((partner) => (
+                <VerifiedPartnerCard key={partner.name} partner={partner} />
+              ))}
+            </div>
+            <Link
+              to="/venues"
+              className="mt-8 inline-flex rounded-full gradient-brand px-6 py-3 text-sm font-semibold"
+            >
+              Become a Verified Partner
+            </Link>
+          </div>
+        </section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <section id="community" className="border-y border-white/5 bg-[#121218] py-20">
+          <div className="marketing-shell">
+            <h2 className="font-heading text-3xl font-bold md:text-4xl">Join the Wave</h2>
+            <p className="mt-3 max-w-2xl text-muted">
+              Real user photos and captions from nights across the city.
+            </p>
+            <div className="mt-10">
+              <JoinTheWaveGallery />
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <section id="download" className="scroll-mt-24 py-20">
+          <div className="marketing-shell">
+            <div className="shimmer-overlay rounded-3xl border border-secondary/25 bg-gradient-to-br from-primary/25 via-[#15151c] to-secondary/10 p-8 md:p-12 glow-card">
+              <h2 className="font-heading text-3xl font-bold md:text-4xl">
+                Available on iOS
+              </h2>
+              <p className="mt-3 max-w-xl text-muted">
+                Motion launches native on iPhone first. On Android, open the web
+                app and add it to your home screen — full Motion, no app store
+                wait.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <span className="rounded-xl border border-white/15 bg-black/40 px-5 py-3 text-sm font-semibold text-white/70">
+                  App Store — Coming soon
+                </span>
+                <Link
+                  to="/app"
+                  className="inline-flex items-center gap-2 rounded-xl border border-accent/40 bg-accent/10 px-5 py-3 text-sm font-semibold text-accent hover:bg-accent/15"
+                >
+                  <Smartphone size={16} /> On Android? Open the web app
+                </Link>
+              </div>
+              <div className="mt-8 max-w-md rounded-2xl border border-white/10 bg-black/30 p-5">
+                <h3 className="font-heading font-semibold">Add to Home Screen</h3>
+                <p className="mt-2 text-sm text-muted">
+                  On Android (Chrome): menu → Install app / Add to Home screen.
+                  On iOS Safari: Share → Add to Home Screen.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </ScrollReveal>
     </>
   )
