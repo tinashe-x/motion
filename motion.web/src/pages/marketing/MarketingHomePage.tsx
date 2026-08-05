@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ShieldCheck, Smartphone } from 'lucide-react'
+import { AddToHomeScreenButton } from '@/components/AddToHomeScreenButton'
 import { ScrollReveal } from '@/components/ui/Skeleton'
 import { ProblemCarousel } from '@/components/marketing/ProblemCarousel'
 import { HowItWorksCarousel } from '@/components/marketing/HowItWorksCarousel'
@@ -262,23 +263,19 @@ export function MarketingHomePage() {
                 app and add it to your home screen — full Motion, no app store
                 wait.
               </p>
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-8 flex flex-wrap items-center gap-3">
                 <span className="rounded-xl border border-white/15 bg-black/40 px-5 py-3 text-sm font-semibold text-white/70">
                   App Store — Coming soon
                 </span>
                 <Link
                   to="/app"
-                  className="inline-flex items-center gap-2 rounded-xl border border-accent/40 bg-accent/10 px-5 py-3 text-sm font-semibold text-accent hover:bg-accent/15"
+                  className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold text-white/90 hover:border-accent/50 hover:text-accent"
                 >
-                  <Smartphone size={16} /> On Android? Open the web app
+                  <Smartphone size={16} /> Open web app
                 </Link>
               </div>
-              <div className="mt-8 max-w-md rounded-2xl border border-white/10 bg-black/30 p-5">
-                <h3 className="font-heading font-semibold">Add to Home Screen</h3>
-                <p className="mt-2 text-sm text-muted">
-                  On Android (Chrome): menu → Install app / Add to Home screen.
-                  On iOS Safari: Share → Add to Home Screen.
-                </p>
+              <div className="mt-8 max-w-md">
+                <AddToHomeScreenButton />
               </div>
             </div>
           </div>
