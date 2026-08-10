@@ -18,6 +18,8 @@ import { MapPage } from '@/pages/app/MapPage'
 import { CommunityPage } from '@/pages/app/CommunityPage'
 import { ProfilePage } from '@/pages/app/ProfilePage'
 import { EventDetailPage } from '@/pages/app/EventDetailPage'
+import { MessagesInboxPage } from '@/pages/app/MessagesInboxPage'
+import { MessagesThreadPage } from '@/pages/app/MessagesThreadPage'
 import { SettingsPage } from '@/pages/app/SettingsPage'
 import { NotificationsSettingsPage } from '@/pages/app/NotificationsSettingsPage'
 import { FaqPage } from '@/pages/app/FaqPage'
@@ -68,6 +70,8 @@ export default function App() {
             <Route path="map" element={<MapPage />} />
             <Route path="community" element={<CommunityPage />} />
             <Route path="profile" element={<ProfilePage />} />
+            <Route path="messages" element={<MessagesInboxPage />} />
+            <Route path="messages/:threadId" element={<MessagesThreadPage />} />
             <Route path="notifications" element={<AppNotificationsPage />} />
             <Route path="event/:id" element={<EventDetailPage />} />
             <Route path="event/:id/verify" element={<VerifyPhotoPage />} />

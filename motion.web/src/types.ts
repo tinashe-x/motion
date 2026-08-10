@@ -106,3 +106,67 @@ export interface SubmitPhotoInput {
   longitude: number
   isVerified: boolean
 }
+
+export interface Friendship {
+  id: string
+  userId: string
+  friendId: string
+}
+
+export interface Post {
+  id: string
+  authorId: string
+  eventId?: string
+  caption: string
+  mediaUrl?: string
+  createdAt: string
+}
+
+export interface Comment {
+  id: string
+  postId: string
+  authorId: string
+  body: string
+  createdAt: string
+}
+
+export type BoltTargetType = 'post' | 'event'
+
+export interface BoltReact {
+  id: string
+  userId: string
+  targetType: BoltTargetType
+  targetId: string
+  createdAt: string
+}
+
+export interface DmThread {
+  id: string
+  participantIds: [string, string]
+  updatedAt: string
+}
+
+export interface DmMessage {
+  id: string
+  threadId: string
+  senderId: string
+  body: string
+  createdAt: string
+  readAt?: string
+}
+
+export type LiveUpdateKind =
+  | 'bolt'
+  | 'comment'
+  | 'rsvp'
+  | 'photo'
+  | 'checkin'
+
+export interface LiveUpdate {
+  id: string
+  eventId: string
+  actorId: string
+  kind: LiveUpdateKind
+  text: string
+  createdAt: string
+}

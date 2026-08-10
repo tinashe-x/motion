@@ -1,7 +1,14 @@
 import type {
   Attendance,
+  BoltReact,
+  Comment,
+  DmMessage,
+  DmThread,
   EventItem,
   EventPhoto,
+  Friendship,
+  LiveUpdate,
+  Post,
   Profile,
   Venue,
 } from '@/types'
@@ -311,6 +318,215 @@ export const photos: EventPhoto[] = [
 export const initialAttendance: Attendance[] = [
   { id: 'a1', eventId: 'e2', userId: 'u1', status: 'saved' },
   { id: 'a2', eventId: 'e4', userId: 'u1', status: 'saved' },
+  { id: 'a3', eventId: 'e1', userId: 'u1', status: 'going' },
+]
+
+export const friendships: Friendship[] = [
+  { id: 'f1', userId: 'u1', friendId: 'u3' },
+  { id: 'f2', userId: 'u1', friendId: 'u4' },
+  { id: 'f3', userId: 'u1', friendId: 'u2' },
+]
+
+export const posts: Post[] = [
+  {
+    id: 'post1',
+    authorId: 'u3',
+    eventId: 'e1',
+    caption: 'Bass just dropped — room is packed.',
+    mediaUrl:
+      'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&h=800&fit=crop',
+    createdAt: hoursFromNow(-1),
+  },
+  {
+    id: 'post2',
+    authorId: 'u4',
+    eventId: 'e1',
+    caption: 'Lights hitting different tonight.',
+    mediaUrl:
+      'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&h=800&fit=crop',
+    createdAt: hoursFromNow(-0.5),
+  },
+  {
+    id: 'post3',
+    authorId: 'u2',
+    eventId: 'e2',
+    caption: 'Crowd gathering at the amphitheatre — who is coming?',
+    mediaUrl:
+      'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&h=800&fit=crop',
+    createdAt: hoursFromNow(-2),
+  },
+  {
+    id: 'post4',
+    authorId: 'u3',
+    eventId: 'e4',
+    caption: 'Festival grounds warming up.',
+    mediaUrl:
+      'https://images.unsplash.com/photo-1506157786151-b8491531f063?w=600&h=750&fit=crop',
+    createdAt: hoursFromNow(-5),
+  },
+  {
+    id: 'post5',
+    authorId: 'u4',
+    caption: 'Who is free this weekend? Looking for a set.',
+    createdAt: hoursFromNow(-8),
+  },
+]
+
+export const comments: Comment[] = [
+  {
+    id: 'c1',
+    postId: 'post1',
+    authorId: 'u4',
+    body: 'Say less — on my way.',
+    createdAt: hoursFromNow(-0.8),
+  },
+  {
+    id: 'c2',
+    postId: 'post1',
+    authorId: 'u1',
+    body: 'Motion Meter looking charged already.',
+    createdAt: hoursFromNow(-0.6),
+  },
+  {
+    id: 'c3',
+    postId: 'post3',
+    authorId: 'u3',
+    body: 'Saved it — see you there.',
+    createdAt: hoursFromNow(-1.5),
+  },
+]
+
+export const bolts: BoltReact[] = [
+  {
+    id: 'b1',
+    userId: 'u4',
+    targetType: 'post',
+    targetId: 'post1',
+    createdAt: hoursFromNow(-0.7),
+  },
+  {
+    id: 'b2',
+    userId: 'u2',
+    targetType: 'post',
+    targetId: 'post1',
+    createdAt: hoursFromNow(-0.65),
+  },
+  {
+    id: 'b3',
+    userId: 'u3',
+    targetType: 'event',
+    targetId: 'e1',
+    createdAt: hoursFromNow(-0.4),
+  },
+  {
+    id: 'b4',
+    userId: 'u4',
+    targetType: 'event',
+    targetId: 'e1',
+    createdAt: hoursFromNow(-0.3),
+  },
+  {
+    id: 'b5',
+    userId: 'u3',
+    targetType: 'post',
+    targetId: 'post2',
+    createdAt: hoursFromNow(-0.2),
+  },
+]
+
+export const dmThreads: DmThread[] = [
+  {
+    id: 't1',
+    participantIds: ['u1', 'u3'],
+    updatedAt: hoursFromNow(-0.25),
+  },
+  {
+    id: 't2',
+    participantIds: ['u1', 'u4'],
+    updatedAt: hoursFromNow(-3),
+  },
+  {
+    id: 't3',
+    participantIds: ['u1', 'u2'],
+    updatedAt: hoursFromNow(-20),
+  },
+]
+
+export const dmMessages: DmMessage[] = [
+  {
+    id: 'm1',
+    threadId: 't1',
+    senderId: 'u3',
+    body: 'You coming to Amapiano Fridays?',
+    createdAt: hoursFromNow(-2),
+    readAt: hoursFromNow(-1.9),
+  },
+  {
+    id: 'm2',
+    threadId: 't1',
+    senderId: 'u1',
+    body: 'Already joined — Motion Meter looks lit.',
+    createdAt: hoursFromNow(-1.8),
+    readAt: hoursFromNow(-1.7),
+  },
+  {
+    id: 'm3',
+    threadId: 't1',
+    senderId: 'u3',
+    body: 'Bet. Meet at the Orbit entrance?',
+    createdAt: hoursFromNow(-0.25),
+  },
+  {
+    id: 'm4',
+    threadId: 't2',
+    senderId: 'u4',
+    body: 'That festival lineup is insane.',
+    createdAt: hoursFromNow(-4),
+    readAt: hoursFromNow(-3.5),
+  },
+  {
+    id: 'm5',
+    threadId: 't2',
+    senderId: 'u1',
+    body: 'Saved it. Want to go together?',
+    createdAt: hoursFromNow(-3),
+    readAt: hoursFromNow(-2.9),
+  },
+  {
+    id: 'm6',
+    threadId: 't3',
+    senderId: 'u2',
+    body: 'Thanks for the vibe check on our listing.',
+    createdAt: hoursFromNow(-20),
+    readAt: hoursFromNow(-19),
+  },
+]
+
+export const liveUpdates: LiveUpdate[] = [
+  {
+    id: 'lu1',
+    eventId: 'e1',
+    actorId: 'u3',
+    kind: 'bolt',
+    text: 'Sia charged the Motion Meter',
+    createdAt: hoursFromNow(-0.4),
+  },
+  {
+    id: 'lu2',
+    eventId: 'e1',
+    actorId: 'u4',
+    kind: 'photo',
+    text: 'Kai dropped a verified moment',
+    createdAt: hoursFromNow(-0.5),
+  },
+  {
+    id: 'lu3',
+    eventId: 'e1',
+    actorId: 'u1',
+    kind: 'rsvp',
+    text: 'Thandi joined the night',
+    createdAt: hoursFromNow(-1.2),
+  },
 ]
 
 export function getVenue(venueId: string) {

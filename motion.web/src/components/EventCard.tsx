@@ -2,9 +2,13 @@ import { Link } from 'react-router-dom'
 import type { EventItem } from '@/types'
 import { formatEventWhen, getVenue } from '@/data/mock'
 import { MotionMeter } from '@/components/MotionMeter'
+import { useAppState } from '@/context/AppState'
 
 export function EventCard({ event }: { event: EventItem }) {
   const venue = getVenue(event.venueId)
+  const { getEventCharge } = useAppState()
+  const { chargeNorm } = getEventCharge(event.id)
+
   return (
     <Link
       to={`/app/event/${event.id}`}
@@ -21,6 +25,7 @@ export function EventCard({ event }: { event: EventItem }) {
           <MotionMeter
             safetyScore={event.safetyScore}
             popularityScore={event.popularityScore}
+            chargeNormalized={chargeNorm}
           />
         </div>
         <span className="absolute bottom-3 left-3 rounded-full bg-black/55 px-2.5 py-1 text-[11px] font-medium text-white/90 backdrop-blur">

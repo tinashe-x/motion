@@ -1,18 +1,29 @@
 import { useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft, Camera, Share2, Bookmark } from 'lucide-react'
-import { SafetyBadge } from '@/components/MotionMeter'
+import { BoltButton, MotionMeter, SafetyBadge } from '@/components/MotionMeter'
 import { PhotoPost } from '@/components/PhotoPost'
 import { useAppState } from '@/context/AppState'
-import { formatEventWhen, getVenue } from '@/data/mock'
+import { formatEventWhen, getProfile, getVenue } from '@/data/mock'
 import { cn } from '@/lib/cn'
 
 type Tab = 'details' | 'map' | 'feed'
 
 export function EventDetailPage() {
   const { id } = useParams()
-  const { events, photos, attendance, setAttendance, pushToast, hiddenPhotoIds } =
-    useAppState()
+  const {
+    events,
+    photos,
+    attendance,
+    setAttendance,
+    pushToast,
+    hiddenPhotoIds,
+    liveUpdates,
+    getEventCharge,
+    toggleBolt,
+    hasBolted,
+    bolts,
+  } = useAppState()
   const [tab, setTab] = useState<Tab>('details')
   const event = events.find((e) => e.id === id)
   const venue = event ? getVenue(event.venueId) : undefined
@@ -33,6 +44,24 @@ export function EventDetailPage() {
       ),
     [photos, event?.id, hiddenPhotoIds],
   )
+
+  const updates = useMemo(
+    () =>
+      liveUpdates
+        .filter((u) => u.eventId === event?.id)
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        ),
+    [liveUpdates, event?.id],
+  )
+
+  const charge = event ? getEventCharge(event.id) : null
+  const eventBoltCount = event
+    ? bolts.filter((b) => b.targetType === 'event' && b.targetId === event.id)
+        .length
+    : 0
+  const bolted = event ? hasBolted('event', event.id) : false
 
   if (!event) {
     return (
@@ -60,6 +89,16 @@ export function EventDetailPage() {
         >
           <ArrowLeft size={18} />
         </Link>
+        {charge ? (
+          <div className="absolute right-4 top-4">
+            <MotionMeter
+              safetyScore={event.safetyScore}
+              popularityScore={event.popularityScore}
+              chargeNormalized={charge.chargeNorm}
+              size="md"
+            />
+          </div>
+        ) : null}
       </div>
 
       <div className="pb-8">
@@ -88,44 +127,54 @@ export function EventDetailPage() {
         {tab === 'details' ? (
           <div className="mt-5 grid gap-6 lg:grid-cols-[1.4fr_0.8fr]">
             <div className="space-y-4">
-            <div>
-              <span className="rounded-full bg-primary/25 px-2.5 py-1 text-[11px] font-medium">
-                {event.category}
-              </span>
-              <h1 className="mt-3 font-heading text-2xl font-bold">{event.name}</h1>
-              <p className="mt-1 text-sm text-muted">
-                {formatEventWhen(event.startTime)}
+              <div>
+                <span className="rounded-full bg-primary/25 px-2.5 py-1 text-[11px] font-medium">
+                  {event.category}
+                </span>
+                <h1 className="mt-3 font-heading text-2xl font-bold">
+                  {event.name}
+                </h1>
+                <p className="mt-1 text-sm text-muted">
+                  {formatEventWhen(event.startTime)}
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <SafetyBadge score={event.safetyScore} />
+                <BoltButton
+                  active={bolted}
+                  count={eventBoltCount}
+                  onClick={() => toggleBolt('event', event.id)}
+                  size="md"
+                />
+              </div>
+              <p className="text-sm leading-relaxed text-white/80">
+                {event.description}
               </p>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => pushToast('Share link copied (mock)')}
+                  className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full border border-white/15 text-sm sm:flex-none sm:px-5"
+                >
+                  <Share2 size={16} /> Share
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAttendance(event.id, 'saved')}
+                  className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full border border-white/15 text-sm sm:flex-none sm:px-5"
+                >
+                  <Bookmark size={16} /> {saved ? 'Saved' : 'Save'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAttendance(event.id, 'going')}
+                  className="inline-flex min-h-11 flex-[1.4] items-center justify-center rounded-full gradient-brand text-sm font-semibold sm:flex-none sm:px-6"
+                >
+                  {joined ? 'Joined' : 'Join Event'}
+                </button>
+              </div>
             </div>
-            <SafetyBadge score={event.safetyScore} />
-            <p className="text-sm leading-relaxed text-white/80">
-              {event.description}
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={() => pushToast('Share link copied (mock)')}
-                className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full border border-white/15 text-sm sm:flex-none sm:px-5"
-              >
-                <Share2 size={16} /> Share
-              </button>
-              <button
-                type="button"
-                onClick={() => setAttendance(event.id, 'saved')}
-                className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full border border-white/15 text-sm sm:flex-none sm:px-5"
-              >
-                <Bookmark size={16} /> {saved ? 'Saved' : 'Save'}
-              </button>
-              <button
-                type="button"
-                onClick={() => setAttendance(event.id, 'going')}
-                className="inline-flex min-h-11 flex-[1.4] items-center justify-center rounded-full gradient-brand text-sm font-semibold sm:flex-none sm:px-6"
-              >
-                {joined ? 'Joined' : 'Join Event'}
-              </button>
-            </div>
-            </div>
-            <div className="rounded-2xl border border-white/8 bg-surface-2 p-4 h-fit">
+            <div className="h-fit rounded-2xl border border-white/8 bg-surface-2 p-4">
               <p className="font-heading font-semibold">Venue Information</p>
               <p className="mt-2 text-sm">{venue?.name}</p>
               <p className="text-sm text-muted">{venue?.address}</p>
@@ -156,19 +205,42 @@ export function EventDetailPage() {
         {tab === 'feed' ? (
           <div className="relative mt-5 space-y-4 pb-16 lg:grid lg:grid-cols-2 lg:gap-6 lg:space-y-0">
             <div className="space-y-4">
-            <h2 className="font-heading text-lg font-semibold">Real-Time Vibe</h2>
-            {livePhotos.length ? (
-              livePhotos.map((photo) => <PhotoPost key={photo.id} photo={photo} />)
-            ) : (
-              <p className="text-sm text-muted">No live photos yet.</p>
-            )}
+              <h2 className="font-heading text-lg font-semibold">
+                Real-Time Vibe
+              </h2>
+              {livePhotos.length ? (
+                livePhotos.map((photo) => (
+                  <PhotoPost key={photo.id} photo={photo} />
+                ))
+              ) : (
+                <p className="text-sm text-muted">No live photos yet.</p>
+              )}
             </div>
-            <div className="rounded-2xl border border-white/8 bg-surface p-4 h-fit">
-              <h3 className="font-heading font-semibold">User Feedback</h3>
-              <ul className="mt-3 space-y-2 text-sm text-muted">
-                <li>“Security line moved fast tonight.”</li>
-                <li>“Energy is high near the main stage.”</li>
-              </ul>
+            <div className="h-fit space-y-4">
+              <div className="rounded-2xl border border-white/8 bg-surface p-4">
+                <h3 className="font-heading font-semibold">Live updates</h3>
+                <ul className="mt-3 space-y-2 text-sm text-muted">
+                  {updates.length ? (
+                    updates.map((u) => {
+                      const actor = getProfile(u.actorId)
+                      return (
+                        <li key={u.id} className="flex gap-2">
+                          <img
+                            src={actor?.avatarUrl}
+                            alt=""
+                            className="mt-0.5 h-6 w-6 rounded-full object-cover"
+                          />
+                          <span>
+                            <span className="text-white/90">{u.text}</span>
+                          </span>
+                        </li>
+                      )
+                    })
+                  ) : (
+                    <li>No live updates yet — bolt, comment, or join.</li>
+                  )}
+                </ul>
+              </div>
             </div>
             <Link
               to={`/app/event/${event.id}/verify`}
